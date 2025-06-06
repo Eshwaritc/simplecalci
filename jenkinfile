@@ -1,0 +1,28 @@
+pipeline { 
+    agent any 
+    tools { 
+          maven 'Maven' //Ensure name matches with configured  
+    } 
+    stages {
+         stage('Clone') {
+             steps {
+                 git credentialsId : '12' , url : 'https://github.com/Eshwaritc/simplecalci.git'
+             }
+         }
+     stage('Build') {  
+            steps { 
+                bat 'mvn clean package'  
+            } 
+      } 
+     stage('Test') {  
+            steps { 
+                bat 'mvn test'  
+            } 
+      } 
+     stage('Run Application') {  
+            steps { 
+                bat 'java -jar "SimpleCalci-0.0.1-SNAPSHOT.jar"'
+            } 
+       }
+    }
+}
